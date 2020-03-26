@@ -1,9 +1,9 @@
 # Create a Minecraft RLCraft server with GCP
 
-In this guide, you will learn to create a RLCraft v2.8.1 server online for free using Google Cloud Platform (GCP). 
-- How it can be for free ? <br/>
+In this guide, you will learn to create a RLCraft v2.8.1 server online for free using Google Cloud Platform. 
+- How can it be for free ? <br/>
 
-=> Because GCP gives you 300$ free credit for a year, to test their product. You will be able to run you server with it. However, to access the 300$ free credit, GCP asks for a credit card. No money will be charged on this card as long as you have not spent all of your 300$ credit. Google Cloud will paused all running instances once your 300$ credit have been used, and ask if you want to upgrade to a paid account.  
+=> Because GCP gives you 300$ free credit for a year, to test their product. You will be able to run your server on it. However, to access the 300$ free credit, GCP asks for a credit card. No money will be charged on this card as long as you have not spent all of your 300$ credit. Google Cloud will paused all running instances once your 300$ credit have been used, and ask if you want to upgrade to a paid account.
 
 Youtube video walkthrough :
 
@@ -80,17 +80,15 @@ On GCP, go to Compute Engine, and connect in SSH, then execute :<br/>
 `chmod 777 -R data`<br/>
 ## 5. Access Cloud Run, get deploy.yaml and "kubectl create -f deploy.yaml"
 
-## 6. Get the public IP address
-
 On GCP, go to Kubernetes Engine, connect to your cluster with Cloud Shell<br/>
-`kubectl get all`<br/>
 `wget https://raw.githubusercontent.com/dleurs/rlcraft/master/deploy.yaml`<br/>
 `kubectl create -f deploy.yaml`<br/>
-`kubectl get all`<br/>
 `kubectl get pod`<br/>
 `kubectl describe pod release-1-minecraft-5f49ff485d-pv8lq`<br/>
 `kubectl logs release-1-minecraft-5f49ff485d-pv8lq --follow`<br/>
 
+## 6. Get the public IP address
+`kubectl get service`<br/>
 ## 7. Download RLCraft client on Twitch, and Enjoy
 
 ### Steps to download RLCraft client, if not already installed :
@@ -115,20 +113,22 @@ JVM Arguments :<br/>
 
 ### Do a backup :
 On GCP, go to Kubernetes Engine, and connect to your cluster using Cloud Shell, then execute :<br/>
-`NAMESPACE=default`<br/>
+`mkdir rlcraft-saves;cd rlcraft-saves`;<br/>
+`now=$(date +'%Y-%m-%d-%Hh%M')`<br/>
+`mkdir world-${now};cd world-${now}`;<br/>
 `kubectl get pod`<br/>
 Copy pod name <br/>
-`POD_ID=lionhope-387ff8d-sdis9`<br/>
-`kubectl exec --namespace ${NAMESPACE} ${POD_ID} rcon-cli save-off`<br/>
-`kubectl exec --namespace ${NAMESPACE} ${POD_ID} rcon-cli save-all`<br/>
+`POD_ID=release-1-minecraft-577889c49d-2xwnp`<br/>
+`kubectl exec ${POD_ID} rcon-cli save-off`<br/>
+`kubectl exec ${POD_ID} rcon-cli save-all`<br/>
 `kubectl cp ${NAMESPACE}/${POD_ID}:/data/world .`<br/>
-`kubectl exec --namespace ${NAMESPACE} ${POD_ID} rcon-cli save-on`<br/>
-
-`tar -czvf world-2020.03.26.12h30.tar world/`<br/>
+`kubectl exec ${POD_ID} rcon-cli save-on`<br/>
+`cd ..`<br/>
+`tar -czvf world-${now}.tar world-${now}/`<br/>
 
 ### Recover a backup :
 
-On GCP, go to Compute Engine, and connect in SSH, then execute :
+On GCP, go to Compute Engine, and connect in SSH, then execute :<br/>
 `tar -xzvf world-2020.03.26.12h30.tar`<br/>
 `chmod 777 -R world/`<br/>
 You can now move this folder into home/rlcraft-server/data/ 
