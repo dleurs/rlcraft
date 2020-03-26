@@ -5,7 +5,7 @@ In this guide, you will learn to create a RLCraft v2.8.1 server online for free 
 
 => Because GCP gives you 300$ free credit for a year, to test their product. You will be able to run you server with it. However, to access the 300$ free credit, GCP asks for a credit card. No money will be charged on this card as long as you have not spent all of your 300$ credit. Google Cloud will paused all running instances once your 300$ credit have been used, and ask if you want to upgrade to a paid account.  
 
-Youtube video :
+Youtube video walkthrough :
 
 1. Create a GCP account and access the 300$ free credit
 2. Create Kubernetes Engine, one node with 7.5G RAM and 2 vCPU
