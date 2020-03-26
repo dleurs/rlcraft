@@ -1,4 +1,4 @@
-# Create an RLCraft server with GCP
+# Create a Minecraft RLCraft server with GCP
 
 In this guide, you will learn to create a RLCraft server for free using Google Cloud Platform (GCP). 
 - How it can be for free ? <br/>
@@ -67,9 +67,11 @@ More info on GCP free trial : https://www.youtube.com/watch?v=P2ADJdk5mYo
 
 ## 6. Get the public IP address and **Enjoy** 
 
-Connect with Cloud Shell<br/>
-?? vim deploy.yaml<br/>
-copy/paste deploy.yaml<br/>
+In Kubernetes engine, connect to your cluster with Cloud Shell<br/>
+`kubectl get all`<br/>
+`wget https://raw.githubusercontent.com/dleurs/rlcraft/master/deploy.yaml`<br/>
+`kubectl create -f deploy.yaml`<br/>
+`kubectl get all`<br/>
 
 ## 7. Do a backup and restore a backup
 
