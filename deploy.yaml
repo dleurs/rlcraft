@@ -1,4 +1,17 @@
-# Source: minecraft/templates/minecraft-svc.yaml
+# Source: minecraft/templates/secrets.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: release-1-minecraft
+  labels:
+    app: release-1-minecraft
+    chart: "minecraft-1.2.2"
+    release: "release-1"
+    heritage: "Helm"
+type: Opaque
+data:
+  rcon-password: "Q0hBTkdFTUUh"
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -77,8 +90,6 @@ spec:
           value: "TRUE"
         - name: TYPE
           value: "FORGE"
-        #- name: FORGE_INSTALLER_URL
-        #  value: "https://files.minecraftforge.net/maven/net/minecraftforge/forge/1.12.2-14.23.5.2768/forge-1.12.2-14.23.5.2768-universal.jar"
         - name: FORGE_INSTALLER
           value: "forge-1.12.2-14.23.5.2838-installer.jar"
         - name: DIFFICULTY
@@ -116,13 +127,13 @@ spec:
         - name: SPAWN_NPCS
           value: "true"
         - name: VIEW_DISTANCE
-          value: "25"
+          value: "6"
         - name: SEED
           value: ""
         - name: MODE
           value: "survival"
         - name: MOTD
-          value: "Welcome to Minecraft on Kubernetes!"
+          value: "Welcome to RLCraft server !"
         - name: PVP
           value: "false"
         - name: LEVEL_TYPE
@@ -150,4 +161,4 @@ spec:
       volumes:
       - name: datadir
         hostPath:
-            path: "/home/rlcraft_server/data"
+            path: "/home/rlcraft-server/data"
