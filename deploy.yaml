@@ -1,0 +1,153 @@
+# Source: minecraft/templates/minecraft-svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: release-1-minecraft
+  labels:
+    app: release-1-minecraft
+    chart: "minecraft-1.2.2"
+    release: "release-1"
+    heritage: "Helm"
+spec:
+  type: LoadBalancer
+  ports:
+  - name: minecraft
+    port: 25565
+    targetPort: minecraft
+    protocol: TCP
+  selector:
+    app: release-1-minecraft
+---
+# Source: minecraft/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: release-1-minecraft
+  labels:
+    app: release-1-minecraft
+    chart: "minecraft-1.2.2"
+    release: "release-1"
+    heritage: "Helm"
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: release-1-minecraft
+  template:
+    metadata:
+      labels:
+        app: release-1-minecraft
+    spec:
+      securityContext:
+        runAsUser: 1000
+        fsGroup: 2000
+      containers:
+      - name: release-1-minecraft
+        image: "itzg/minecraft-server:latest"
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: 1200m
+            memory: 4096Mi
+        readinessProbe:
+          exec:
+            command: 
+              - mcstatus
+              - localhost:25565
+              - status
+          initialDelaySeconds: 30
+          periodSeconds: 5
+          failureThreshold: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        livenessProbe:
+          exec:
+            command:
+              - mcstatus
+              - localhost:25565
+              - status
+          initialDelaySeconds: 30
+          periodSeconds: 5
+          failureThreshold: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        env:
+        - name: EULA
+          value: "TRUE"
+        - name: TYPE
+          value: "FORGE"
+        #- name: FORGE_INSTALLER_URL
+        #  value: "https://files.minecraftforge.net/maven/net/minecraftforge/forge/1.12.2-14.23.5.2768/forge-1.12.2-14.23.5.2768-universal.jar"
+        - name: FORGE_INSTALLER
+          value: "forge-1.12.2-14.23.5.2838-installer.jar"
+        - name: DIFFICULTY
+          value: "normal"
+        - name: WHITELIST
+          value: ""
+        - name: OPS
+          value: ""
+        - name: ICON
+          value: ""
+        - name: MAX_PLAYERS
+          value: "20"
+        - name: MAX_WORLD_SIZE
+          value: "10000"
+        - name: ALLOW_NETHER
+          value: "true"
+        - name: ANNOUNCE_PLAYER_ACHIEVEMENTS
+          value: "true"
+        - name: ENABLE_COMMAND_BLOCK
+          value: "true"
+        - name: FORCE_gameMode
+          value: "false"
+        - name: GENERATE_STRUCTURES
+          value: "true"
+        - name: HARDCORE
+          value: "false"
+        - name: MAX_BUILD_HEIGHT
+          value: "256"
+        - name: MAX_TICK_TIME
+          value: "60000"
+        - name: SPAWN_ANIMALS
+          value: "true"
+        - name: SPAWN_MONSTERS
+          value: "true"
+        - name: SPAWN_NPCS
+          value: "true"
+        - name: VIEW_DISTANCE
+          value: "25"
+        - name: SEED
+          value: ""
+        - name: MODE
+          value: "survival"
+        - name: MOTD
+          value: "Welcome to Minecraft on Kubernetes!"
+        - name: PVP
+          value: "false"
+        - name: LEVEL_TYPE
+          value: "DEFAULT"
+        - name: GENERATOR_SETTINGS
+          value: ""
+        - name: LEVEL
+          value: "world"
+        - name: ONLINE_MODE
+          value: "false"
+        - name: MEMORY
+          value: "4096M"
+        - name: JVM_OPTS
+          value: ""
+        - name: JVM_XX_OPTS
+          value: ""
+
+        ports:
+        - name: minecraft
+          containerPort: 25565
+          protocol: TCP
+        volumeMounts:
+        - name: datadir
+          mountPath: /data
+      volumes:
+      - name: datadir
+        hostPath:
+            path: "/home/rlcraft_server/data"
