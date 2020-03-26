@@ -47,13 +47,14 @@ Select Zonal, and check the nearest zone in : <br/>
 
 default-pool > 1 node (instead of 3)<br/>
 nodes > Select n1, n1-standard-2<br/>
+security > uncheck Activate integrity surveillancy<br/>
 Create<br/>
 Wait a few minuts<br/>
 
 
 ## 3. Access the VM, create path to files to your server
 
-On GCP, go to Compute Engine, and connect in SSH, then execute :
+On GCP, go to Compute Engine, and connect in SSH, then execute :<br/>
 `sudo su --`<br/>
 `cd ..`<br/>
 `pwd`<br/>
@@ -87,12 +88,8 @@ On GCP, go to Kubernetes Engine, connect to your cluster with Cloud Shell<br/>
 `kubectl create -f deploy.yaml`<br/>
 `kubectl get all`<br/>
 `kubectl get pod`<br/>
+`kubectl describe pod release-1-minecraft-5f49ff485d-pv8lq`<br/>
 `kubectl logs release-1-minecraft-5f49ff485d-pv8lq --follow`<br/>
-
-
-On GCP, go to Compute Engine, and connect in SSH, then execute :
-`cd ..`<br/>
-`chmod 777 -R data`<br/>
 
 ## 7. Enjoy
 
@@ -111,8 +108,6 @@ For me on macOS, it is : <br/>
 `/Library/Java/JavaVirtualMachines/jdk1.8.0_181.jdk/Contents/Home/bin/java`<br/> 
 JVM Arguments :<br/>
 `-Xmx4096m -Xms256m -XX:PermSize=256m -Dfml.ignorePatchDiscrepancies=true -Dfml.ignoreInvalidMinecraftCertificates=true -Duser.language=en -Duser.country=US`<br/>
-
-
 
 ## 8. Do a backup and restore a backup
 

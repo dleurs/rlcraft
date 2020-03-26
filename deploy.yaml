@@ -1,17 +1,4 @@
-# Source: minecraft/templates/secrets.yaml
-apiVersion: v1
-kind: Secret
-metadata:
-  name: release-1-minecraft
-  labels:
-    app: release-1-minecraft
-    chart: "minecraft-1.2.2"
-    release: "release-1"
-    heritage: "Helm"
-type: Opaque
-data:
-  rcon-password: "Q0hBTkdFTUUh"
----
+# Source: minecraft/templates/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -69,8 +56,8 @@ spec:
               - mcstatus
               - localhost:25565
               - status
-          initialDelaySeconds: 30
-          periodSeconds: 5
+          initialDelaySeconds: 90
+          periodSeconds: 15
           failureThreshold: 10
           successThreshold: 1
           timeoutSeconds: 1
@@ -80,8 +67,8 @@ spec:
               - mcstatus
               - localhost:25565
               - status
-          initialDelaySeconds: 30
-          periodSeconds: 5
+          initialDelaySeconds: 90
+          periodSeconds: 15
           failureThreshold: 10
           successThreshold: 1
           timeoutSeconds: 1
