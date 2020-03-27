@@ -88,8 +88,8 @@ On GCP, go to Kubernetes Engine, connect to your cluster with Cloud Shell<br/>
 `kubectl logs release-1-minecraft-5f49ff485d-pv8lq --follow`<br/>
 
 ## 6. Get the public IP address
+Go to GCP, Kubernetes engine :<br/>
 `kubectl get service`<br/>
-
 Check how much RAM and CPU the pod is taking:<br/>
 `kubectl top pod`<br/>
 
@@ -145,7 +145,9 @@ On GCP, go to Compute Engine, and connect in SSH, then execute :<br/>
 `sudo su --`<br/>
 `cd /home/rlcraft-server`<br/>
 `mkdir backups; cd backups`<br/>
-Choose a world, or click on gear and import one from computer
+- Choose a world, or click on gear and import one from computer. Copy the world-time.tar name
+
+
 `WORLD=world-2020-03-27-10h02.tar`<br/>
 `cd ../data`<br/>
 `cp ../backups/${WORLD} .`<br/>
@@ -154,11 +156,13 @@ Choose a world, or click on gear and import one from computer
 Go to Kubernetes Engine, and connect to your cluster using Cloud Shell, then execute :<br/>
 `kubectl get pod --watch`<br/>
 `kubectl exec ${POD_ID} rcon-cli stop`<br/>
+! GO QUICKLY (less than 30 seconds) after stoping the server, to do the next 3 commands ! <br/> 
 
 Go back to Compute Engine :<br/>
 `rm -rf world`<br/>
 `tar -xzvf ${WORLD}`<br/>
 `rm -rf ${WORLD}`<br/>
+
 
 Not necessary to execute `kubectl exec ${POD_ID} rcon-cli stop`, it will restart automatically
 
