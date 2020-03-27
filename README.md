@@ -113,25 +113,52 @@ JVM Arguments :<br/>
 
 ### Do a backup :
 On GCP, go to Kubernetes Engine, and connect to your cluster using Cloud Shell, then execute :<br/>
-`mkdir rlcraft-saves;cd rlcraft-saves`;<br/>
-`now=$(date +'%Y-%m-%d-%Hh%M')`<br/>
-`mkdir world-${now};cd world-${now}`;<br/>
 `kubectl get pod`<br/>
 Copy pod name <br/>
 `POD_ID=release-1-minecraft-577889c49d-2xwnp`<br/>
 `kubectl exec ${POD_ID} rcon-cli save-off`<br/>
 `kubectl exec ${POD_ID} rcon-cli save-all`<br/>
-`kubectl cp ${NAMESPACE}/${POD_ID}:/data/world .`<br/>
-`kubectl exec ${POD_ID} rcon-cli save-on`<br/>
+On GCP, go to Compute Engine, and connect in SSH, then execute :<br/>
+`sudo su --`<br/>
+`cd /home/rlcraft-server/data`<br/>
+`now=$(date +'%Y-%m-%d-%Hh%M')`<br/>
+`tar -czvf world-${now}.tar world/`<br/>
 `cd ..`<br/>
-`tar -czvf world-${now}.tar world-${now}/`<br/>
+`mkdir backups`<br/>
+`mv data/world-${now}.tar backups`<br/>
+`cd backups`<br/>
+`pwd`<br/>
+`ls`<br/>
+Click on the gear, download files<br/>
+
+Go back to Kubernetes Engine, and connect to your cluster using Cloud Shell, then execute :<br/>
+`kubectl exec ${POD_ID} rcon-cli save-on`<br/>
+
 
 ### Recover a backup :
 
 On GCP, go to Compute Engine, and connect in SSH, then execute :<br/>
-`tar -xzvf world-2020.03.26.12h30.tar`<br/>
-`chmod 777 -R world/`<br/>
-You can now move this folder into home/rlcraft-server/data/ 
+`sudo su --`<br/>
+`cd /home/rlcraft-server`<br/>
+`mkdir backups; cd backups`<br/>
+Choose a world, or click on gear and import one from computer
+`WORLD=world-2020-03-27-10h02.tar`<br/>
+`cd ../data`<br/>
+`cp ../backups/${WORLD} .`<br/>
+`ls`<br/>
+
+Go to Kubernetes Engine, and connect to your cluster using Cloud Shell, then execute :<br/>
+`kubectl get pod --watch`<br/>
+`kubectl exec ${POD_ID} rcon-cli stop`<br/>
+
+Go back to Compute Engine :<br/>
+`rm -rf world`<br/>
+`tar -xzvf ${WORLD}`<br/>
+`rm -rf ${WORLD}`<br/>
+
+Not necessary to execute `kubectl exec ${POD_ID} rcon-cli stop`, it will restart automatically
+
+Wait 
 
 ## 8. Going deeper : how did I get this deploy.yaml
 
@@ -146,11 +173,12 @@ Install helm 3<br/>
 Modify the config file : <br/>
 - EULA : true
 - put RAM and CPU as needed
+- change Liveliness and readiness
 - ... <br/>
 
 `helm template -f config.yaml mine-release stable/minecraft > deploy.yaml`<br/>
 Modify the deploy.yaml : <br/> 
-- remove PersistentVolumeClaim
+- remove Secret and PersistentVolumeClaim
 - in the Deployment, change PersistentVolumeClaim to hostPath (as we are running in a single node, no problem to use hostPath) and provide the path
 
 Forge server download (1.12.2 2838) :
