@@ -5,7 +5,7 @@ In this guide, you will learn to create a RLCraft v2.8.1 server online for free 
 
 => Because GCP gives you 300$ free credit for a year, to test their product. You will be able to run your server on it. However, to access the 300$ free credit, GCP asks for a credit card. No money will be charged on this card as long as you have not spent all of your 300$ credit. Google Cloud will paused all running instances once your 300$ credit have been used, and ask if you want to upgrade to a paid account.
 
-Youtube video walkthrough :
+Youtube video walkthrough in 🇫🇷 French 🇫🇷 : https://youtu.be/P1NEMT5lBpM
 
 1. Create a GCP account and access the 300$ free credit
 2. Create Kubernetes Engine, one node with 7.5G RAM and 2 vCPU
@@ -18,7 +18,9 @@ Youtube video walkthrough :
 <br/><br/>
 9. Going deeper : how did I get this deploy.yaml
 
-## 1. Create a GCP account and access the 300$ free tier
+Thank you Shivaxi for creating RLCraft, for free <3
+
+## 1. Create a GCP account and access the 300$ free trial
 
 You will require a gmail address. Create one if you don't have.<br/>
 Fill the form to access GCP 300$ credit, as an individual.<br/>
@@ -101,7 +103,7 @@ Download Twitch : <br/>
 
 You will require Java 8 (and Oracle force you to create an account to download the jdk)<br/>
 - https://www.java.com/fr/download/
-
+You will also required an official Minecraft account.<br/>
 Access Twitch, go to mods, Minecraft, Browse modpacks, download RLCraft<br/>
 Check that the version is 2.8.1, the same as the server<br/>
 <br/>
