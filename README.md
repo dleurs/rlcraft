@@ -89,6 +89,10 @@ On GCP, go to Kubernetes Engine, connect to your cluster with Cloud Shell<br/>
 
 ## 6. Get the public IP address
 `kubectl get service`<br/>
+
+Check how much RAM and CPU the pod is taking:<br/>
+`kubectl top pod`<br/>
+
 ## 7. Download RLCraft client on Twitch, and Enjoy
 
 ### Steps to download RLCraft client, if not already installed :
