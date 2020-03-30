@@ -45,14 +45,15 @@ More info on GCP free trial : https://www.youtube.com/watch?v=P2ADJdk5mYo
 ## 2. Create Kubernetes Engine, one node with 7.5G RAM and 2 vCPU
 
 Go to GCP, Kubernetes engine<br/>
-Create a cluster<br/>
-Select Zonal, and check the nearest zone in : <br/>
-- https://cloud.google.com/products/calculator
+Create a cluster : <br/>
+- Select Zonal, and check the nearest zone in : https://cloud.google.com/products/calculator <br/>
 
-default-pool > 1 node (instead of 3)<br/>
-nodes > Select n1, n1-standard-2, **2 vCPU and 7.5 RAM**<br/>
-Create<br/>
-?? Select 20Go of SSD ? <br/>
+- default-pool > 1 node (instead of 3)
+- nodes > Select n1, n1-standard-2, **2 vCPU and 7.5 RAM**
+- (not sure) Select 20Go of SSD 
+- (not sure) security > uncheck monitoring ressource 
+- Create
+
 Wait a few minuts<br/>
 
 
