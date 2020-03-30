@@ -52,6 +52,7 @@ Select Zonal, and check the nearest zone in : <br/>
 default-pool > 1 node (instead of 3)<br/>
 nodes > Select n1, n1-standard-2, **2 vCPU and 7.5 RAM**<br/>
 Create<br/>
+?? Select 20Go of SSD ? <br/>
 Wait a few minuts<br/>
 
 
