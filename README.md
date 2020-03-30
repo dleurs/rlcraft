@@ -1,6 +1,6 @@
 # Create a Minecraft RLCraft server with GCP and Kubernetes
 
-(It is more ressource effective to create directly a VM, instead of going through Kubernetes. Think of this more as an educational guide with Kubernetes on GCP)
+(It is more ressource effective to create directly a VM, instead of going through Kubernetes. But you will have to set up by hand firewall, install java on VM, create a public IP...)
 
 In this guide, you will learn to create a RLCraft v2.8.1 server online for free using Google Cloud Platform. 
 - How can it be for free ? <br/>
