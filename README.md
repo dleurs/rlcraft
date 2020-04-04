@@ -172,6 +172,7 @@ Go back to Compute Engine :<br/>
 
 Not necessary to execute `kubectl exec ${POD_ID} rcon-cli stop`, it will restart automatically
 
+If it is not working, connect in VM, world folder, delete server.lock, and chmod 777 -R world
 Wait 
 
 ## 8. Going deeper : how did I get this deploy.yaml
